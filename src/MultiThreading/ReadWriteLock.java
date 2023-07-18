@@ -1,7 +1,7 @@
+package MultiThreading;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,7 +23,10 @@ public class ReadWriteLock {
         reader++;
     }
 
-    public synchronized void readUnlock() {
+    public synchronized void readUnlock() throws InterruptedException {
+        while(reader==0){
+            wait();
+        }
         reader--;
         notifyAll();
     }
@@ -38,7 +41,10 @@ public class ReadWriteLock {
         notifyAll();
     }
 
-    public synchronized void writeUnlock() {
+    public synchronized void writeUnlock() throws InterruptedException {
+        while(writer==0){
+            wait();
+        }
         writer--;
         notifyAll();
     }

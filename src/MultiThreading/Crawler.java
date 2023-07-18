@@ -20,10 +20,11 @@ public class Crawler {
     int maxDelay = 1000;
 
     public void crawl(Fetcher fetcher, Set<String> visited, String url, int level) throws InterruptedException {
-        if(level>=5){
+        if(level>5){
             System.out.println("Max level reached");
+            return;
         }
-        System.out.println("Crawling url " + url + " on thread " + Thread.currentThread().getName());
+        System.out.println("Crawling url " + url + " on thread " + Thread.currentThread().getName() + " and level " + level);
         semaphore.acquire();
         boolean alreadyVisited = visited.contains(url);
         visited.add(url);
